@@ -5,7 +5,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
   providedIn: 'root'
 })
 export class PersonaService {
-  url = 'https://api.storecove.com/api/v2/shops'
+  url = 'https://631114db19eb631f9d6ce17d.mockapi.io/api/v1/users'
+  
   constructor(
     private http: HttpClient
   ) { 

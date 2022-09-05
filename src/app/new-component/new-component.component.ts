@@ -1,5 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { TreeNode } from 'angular13-organization-chart';
 import { PersonaService } from '../services/persona.service';
+
+interface MyTreeNode extends TreeNode {
+  name: string;
+  description?: string;
+  image?: string;
+  children: MyTreeNode[];
+}
 
 @Component({
   selector: 'app-new-component',
@@ -8,17 +16,24 @@ import { PersonaService } from '../services/persona.service';
 })
 export class NewComponentComponent implements OnInit {
   title = 'client';
-  public personas:Array<any> = []
+  //public personas:<TreeNode> = []
+
+  @Input()
+  personas!: MyTreeNode[];
 
   constructor(
     private personaService:PersonaService
   ){
-    this.personaService.getPersonas().subscribe((resp: any)=>{
-      this.personas = resp
-    })
+
   }
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.personaService.getPersonas().subscribe((data:any)=>{
+      console.log(data)
+      data.forEach(element => {
+        console.log(element);
+        this.personas.push(element)
+      });
+      this.personas = data;
+    })
   }
-
 }
